@@ -1,10 +1,10 @@
 {
-  "name": "sute_cli_conf",
+  "name": "sute",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "bin": {
-    "sute-conf": "./lib/index.js"
+    "sute": "./lib/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

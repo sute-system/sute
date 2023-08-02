@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path"
 import webpack from "webpack"
 import WebpackDevServer from 'webpack-dev-server';
+import  lints from "sute-lints"
 
 import { resolveApp, compile, writeToFile, getDefaultRootFile } from "../utils/file"
 import exeConfig from "../config/index"
@@ -70,6 +71,12 @@ export const prodCommponentAction = async () => {
       throw error;
     }
   });
+}
+
+export const testCommponentAction = ()=>{
+
+  const lintsInstance = new lints()
+  lintsInstance.test()
 }
 
 
