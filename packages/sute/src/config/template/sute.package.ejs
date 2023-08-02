@@ -1,0 +1,41 @@
+"use strict";
+const path = require("path");
+const appDir = process.cwd();
+const resolveApp = (dir) => path.resolve(appDir, dir);
+
+
+const ConfigFile = {
+  entry: {
+    index: resolveApp("src/<%= otherData.entryName %>")
+  },
+  output: {
+    filename: "static/js/[name]_[[hash:8].js",
+    path: resolveApp("./build"),
+    clean: true
+  },
+  htmlWebpackPlugin: {
+    title: "sute_cli",
+    template: resolveApp("./public/index.html")
+  },
+  definePlugin: {
+    BASE_URL: '"./"'
+  },
+  copyWebpackPlugin: {
+    patterns: [
+      {
+        from: resolveApp("./public"),
+        globOptions: {
+          ignore: [
+            "**/index.html"
+          ]
+        }
+      }
+    ]
+  },
+  serve: {
+    port: 3000,
+    host: "127.0.0.1",
+    hot: true,
+  },
+};
+module.exports = ConfigFile;
