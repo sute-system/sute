@@ -62,7 +62,6 @@ importers:
       scss-loader: ^0.0.1
       speed-measure-webpack-plugin: ^1.5.0
       style-loader: ^3.3.1
-      sute-lints: workspace:*
       swc-loader: ^0.2.3
       terser-webpack-plugin: ^5.3.6
       thread-loader: ^3.0.4
@@ -134,13 +133,15 @@ importers:
       purgecss-webpack-plugin: 5.0.0_webpack@5.88.2
       react-refresh: 0.14.0
       speed-measure-webpack-plugin: 1.5.0_webpack@5.88.2
-      sute-lints: link:../sute-lints
       swc-loader: 0.2.3_t55m5wou5tw5zhtyy5zmzps7jq
       thread-loader: 3.0.4_webpack@5.88.2
       webpack-dev-server: 4.15.1_w46lltld4evug5kpkz4iei6qt4
 
   packages/sute-lints:
-    specifiers: {}
+    specifiers:
+      commander: ^10.0.1
+    dependencies:
+      commander: 10.0.1
 
 packages:
 

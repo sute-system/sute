@@ -58,11 +58,10 @@ const getFileArr = (targetPath: string) => {
 }
 
 // 获取默认文件
-const getDefaultRootFile = (rootPath: string) => {
-  const defaultExtensions = [".wasm", ".mjs", ".js", ".jsx", ".ts", ".tsx", ".vue", ".json"]
+const getDefaultRootFile = (rootPath: string,extensionsArr:string[]) => {
   let targetIndex = ""
   const fileArr = getFileArr(rootPath)
-  for (let suffix of defaultExtensions) {
+  for (let suffix of extensionsArr) {
     let indexName = `index${suffix}`;
     if (fileArr.includes(indexName)) {
       targetIndex = indexName

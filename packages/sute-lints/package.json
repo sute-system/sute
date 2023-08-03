@@ -8,5 +8,8 @@
   },
   "keywords": [],
   "author": "cxw",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^10.0.1"
+  }
 }

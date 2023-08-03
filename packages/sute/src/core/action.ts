@@ -2,14 +2,14 @@ import fs from "fs";
 import path from "path"
 import webpack from "webpack"
 import WebpackDevServer from 'webpack-dev-server';
-import  lints from "sute-lints"
+// import lints from "sute-lints"
 
 import { resolveApp, compile, writeToFile, getDefaultRootFile } from "../utils/file"
-import exeConfig from "../config/index"
+import exeConfig, { WebpackConfig } from "../config/index"
 
 import Config from "./config";
 
-// init初始化 sute.package.json配置文件.
+// init初始化 sute.config.json配置文件.
 export const initConfigFileAction = async () => {
   const ConfigFilePath = resolveApp("sute.config.js")
   if (fs.existsSync(ConfigFilePath)) {
@@ -17,11 +17,10 @@ export const initConfigFileAction = async () => {
     return;
   }
   // 不存在则write.sute.config.js
-  const templateFilePath = path.resolve(__dirname, "../../src/config/template/sute.package.ejs")
-
+  const templateFilePath = path.resolve(__dirname, "../../src/config/template/sute.config.ejs")
   const targetPath = resolveApp("src")
-  const defaultFileName = getDefaultRootFile(targetPath)
-  const result = await compile(templateFilePath, "sute.package.js", { entryName: defaultFileName })
+  const defaultFileName = getDefaultRootFile(targetPath, WebpackConfig.EXTENSIONS)
+  const result = await compile(templateFilePath, "sute.config.js", { entryName: defaultFileName })
   writeToFile(ConfigFilePath, result)
 }
 // 开发
@@ -35,7 +34,6 @@ export const devCommponentAction = async () => {
 
   // 测试端口号是否被占用
   await initConfig.devCheckPort(initConfig.serviceConfig.port!)
-
   // 开启本地服务
   const devServer = new WebpackDevServer(compiler, initConfig.serviceConfig)
   await devServer.start();
@@ -73,10 +71,9 @@ export const prodCommponentAction = async () => {
   });
 }
 
-export const testCommponentAction = ()=>{
-
-  const lintsInstance = new lints()
-  lintsInstance.test()
+export const testCommponentAction = () => {
+  // const lintsInstance = new lints()
+  // lintsInstance.test()
 }
 
 

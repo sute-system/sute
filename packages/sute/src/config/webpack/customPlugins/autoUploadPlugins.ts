@@ -1,29 +1,23 @@
 import { NodeSSH } from "node-ssh"
 import { Compiler } from "webpack"
 
-type uploadOptionsType = {
-  buildPath: string,
-  host: any,
-  username: any,
-  password: any,
-  remotePath: string
-}
+import type { autoUploadPluginType } from "../../../types/webpack"
 
 type sshType = InstanceType<typeof NodeSSH>
 
 class AutoUploadPlugin {
   private ssh: sshType
-  private options: uploadOptionsType
-  constructor(options: uploadOptionsType) {
+  private options: autoUploadPluginType
+  constructor(options: autoUploadPluginType) {
     this.ssh = new NodeSSH()
     this.options = options
   }
-
   apply(compiler: Compiler) {
     compiler.hooks.afterEmit.tapAsync("AutoUploadPlugin", async (compilation, callback) => {
 
       // 1.获取输出的文件夹
-      const outputPath = compilation.outputOptions.path;
+      const buildPath = this.options.buildPath
+      const outputPath = buildPath ? buildPath : compilation.outputOptions.path;
 
       // 2.连接服务器(ssh连接)
       await this.connectServer();

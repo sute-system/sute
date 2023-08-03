@@ -36,9 +36,9 @@ class Config extends Print {
     super()
   }
   private async init() {
-    const ConfigFilePath = resolveApp("sute.package.js")
+    const ConfigFilePath = resolveApp("sute.config.js")
     if (!fs.existsSync(ConfigFilePath)) {
-      this.warnStdout("sute-conf.config.js file not exist!,suggest execute `sute-conf init` command")
+      this.warnStdout("sute.config.js file not exist!,suggest execute `sute init` command")
     }
     if (fs.existsSync(ConfigFilePath)) {
       // 1.获取对应配置
@@ -47,7 +47,7 @@ class Config extends Print {
       await this.checkConfig(configFileInfo)
       // 3.保存自定义的相关配置
       await this.setAdditionalOptimize(configFileInfo)
-      //保存entry,output,resolve等参数
+      //保存entry,output,resolve等webpack参数
       await this.setCommonConfigFn(configFileInfo)
       // serve存在,那么就保存合并开发依赖. 保存serve数据
       if (JSON.stringify(configFileInfo.serve) !== "{}") {
@@ -155,6 +155,7 @@ class Config extends Print {
       httpCompressiton: false,// http 压缩, 默认使用gzip压缩 使用compression-webpack-plugin库,
       buildSpeendUp: false, // 开发esbuild/swc加速~
       esbuildMinimizer: false,// 是否开启esbuild 压缩.
+      deploy: false,// 部署
       htmlWebpackPlugin: {
         title: "sute_cli",
         template: resolveApp("./public/index.html")

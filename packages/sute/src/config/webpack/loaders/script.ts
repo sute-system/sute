@@ -53,7 +53,7 @@ class Script extends Print {
 
     const buildSpeendUp = this.initConfig.extraOptimizeConfig?.buildSpeendUp
     if (!isBoolean(buildSpeendUp) && !isObject(buildSpeendUp)) {
-      this.failStdout("please check the type of the parameter from sute.package.js config buildSpeendUp !")
+      this.failStdout("please check the type of the parameter from sute.config.js config buildSpeendUp !")
       process.exit(1)
     }
 
@@ -67,7 +67,7 @@ class Script extends Print {
 
     const type = this.initConfig.extraOptimizeConfig?.buildSpeendUp.type
     if ((type !== "swc") && (type !== "esbuild")) {
-      this.failStdout("please check the type of the parameter from sute.package.js config buildSpeendUp type !")
+      this.failStdout("please check the type of the parameter from sute.config.js config buildSpeendUp type !")
       process.exit(1)
     }
     const options = this.initConfig.extraOptimizeConfig?.buildSpeendUp.options

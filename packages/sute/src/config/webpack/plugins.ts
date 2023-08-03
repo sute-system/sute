@@ -3,8 +3,6 @@ import progressBarWebpackPlugin from "progress-bar-webpack-plugin";
 import CompressionPlugin from "compression-webpack-plugin"; // http压缩插件
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';// 检测路径大小写敏感
 import type { configInstance } from "../../types/webpack"
-import AutoUploadPlugin from "./customPlugins/autoUploadPlugins"
-
 
 class Plugins {
 
@@ -19,7 +17,6 @@ class Plugins {
       new FriendlyErrorsWebpackPlugin(),
       new CaseSensitivePathsPlugin(),
       this.initConfig.extraOptimizeConfig.httpCompressiton ? this.httpCompressiton : "",
-      ...this.deploy
     ].filter(Boolean)
   }
   get httpCompressiton() {
@@ -29,15 +26,6 @@ class Plugins {
         minRatio: 0.7,
         algorithm: "gzip"
       })
-  }
-  get deploy() {
-    const deploy = this.initConfig.extraOptimizeConfig.deploy
-    if (!deploy) return [""]
-    const optionsArray = Array.isArray(deploy) ? deploy : [deploy];
-    const result = optionsArray.map((option)=>{
-      return new AutoUploadPlugin(option)
-    })
-    return result
   }
 }
 

@@ -15,11 +15,12 @@ import { resolveApp, getAllChildDir } from "../utils/file";
 import type { IWebpackConfig, configInstance, DevConfigInstance, ProdConfigInstance } from "../types/webpack"
 type mergeConfigType = DevConfigInstance | ProdConfigInstance
 
-class WebpackConfig extends Print {
+export class WebpackConfig extends Print {
 
+  static readonly EXTENSIONS = [".wasm", ".mjs", ".js", ".jsx", ".ts", ".tsx", ".vue", ".json"]
   private initConfig: configInstance
   private isProd: boolean
-  private smp: any
+  private smp: InstanceType<typeof SpeedMeasurePlugin>
   public commoConfig: IWebpackConfig;
 
   constructor(config: configInstance, isProdEnv: boolean) {
@@ -130,7 +131,7 @@ class WebpackConfig extends Print {
       }
     }
     return {
-      extensions: [".wasm", ".mjs", ".js", ".jsx", ".ts", ".tsx", ".vue", ".json"],
+      extensions: WebpackConfig.EXTENSIONS,
       alias: _alias,
     }
   }
