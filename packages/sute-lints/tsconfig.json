@@ -1,5 +1,6 @@
 {
   "display": "Node 14",
+  "include": ["src/**/*.ts"],
   "compilerOptions": {
     "lib": [
       "es2020"

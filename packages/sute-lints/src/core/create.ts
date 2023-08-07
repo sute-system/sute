@@ -1,15 +1,20 @@
-const program = require("commander");
+
+import { program } from "commander";
 
 import { eslintAction, testCommponentAction, } from "./action"
+import type { eslinOptsType } from "../types/lints"
 
 export function createCommands() {
+
   program
-    .option('-d --dest <string>')
-    .command("eslint")
+    .option('-f --fix')
+    .command("eslint [matchPamams]")
+    .alias("el")
     .description("eslint file")
-    .action(() => {
-      eslintAction(program.opts().dest || "src/**/*")
+    .action((matchPamams: string = "src/**/*", opts: eslinOptsType) => {
+      eslintAction(matchPamams,{...opts})
     });
+
   program
     .command('dev')
     .description(" will be executed development command ")
@@ -23,6 +28,7 @@ export function createCommands() {
     .action(() => {
       testCommponentAction()
     })
+    
   program
     .command('test')
     .description("test ")

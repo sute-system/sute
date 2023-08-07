@@ -2,14 +2,28 @@
   "name": "sute-lints",
   "version": "1.0.0",
   "description": "",
-  "main": "./lib/index.js",
+  "main": "index.js",
+  "bin": {
+    "sute-lints": "./lib/index.js",
+    "jest": "npx jest"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "cxw",
   "license": "ISC",
   "dependencies": {
-    "commander": "^10.0.1"
+    "commander": "^10.0.1",
+    "fast-glob": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.3",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
+    "eslint": "^8.46.0",
+    "eslint-plugin-react": "^7.33.1",
+    "jest": "^29.6.2",
+    "ts-jest": "^29.1.1"
   }
 }
