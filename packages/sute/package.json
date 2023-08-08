@@ -13,7 +13,7 @@
   "typings": "index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://jihulab.com/sute/sute_cli_conf"
+    "url": "https://jihulab.com/sute/sute/-/tree/master/packages/sute"
   },
   "keywords": [
     "react",
