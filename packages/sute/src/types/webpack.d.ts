@@ -40,8 +40,7 @@ export interface IExtraOptimConfig {
   httpCompressiton?: boolean | objType //  是否http 压缩
   buildSpeendUp?: boolean | buildSpeendUpType, // 开启esbuild 和swc 加速
   esbuildMinimizer?: boolean // 启用esbuild 压缩处理器,
-  deploy?: boolean | autoUploadPluginType | autoUploadPluginType[] // 打包后自动部署~
-  // 打包时写入CDN性能优化
+  deploy?: autoUploadPluginType | autoUploadPluginType[], // 打包后自动部署~
 }
 
 export interface IWebpackConfig extends Configuration, IExtraOptimConfig {

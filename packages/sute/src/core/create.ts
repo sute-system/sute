@@ -1,6 +1,6 @@
 const program = require("commander");
 
-import { initConfigFileAction, devCommponentAction, prodCommponentAction, testCommponentAction } from "./action"
+import { initConfigFileAction, devCommponentAction, prodCommponentAction } from "./action"
 
 export function createCommands() {
   program
@@ -12,21 +12,13 @@ export function createCommands() {
   program
     .command('dev')
     .description(" will be executed development command ")
-    .action(() => {
-      devCommponentAction()
-    });
+    .action(() => { devCommponentAction() });
 
   program
     .command('build')
     .description(" will be executed build command ")
     .action(() => {
       prodCommponentAction()
-    })
-  program
-    .command('test')
-    .description("test ")
-    .action(() => {
-      testCommponentAction()
     })
 }
 

@@ -133,6 +133,18 @@ export class WebpackConfig extends Print {
     return {
       extensions: WebpackConfig.EXTENSIONS,
       alias: _alias,
+      //当正常解析失败后,重定向模块请求.
+      fallback:{
+        fs:false,
+        assert: require.resolve('assert'),
+        buffer: require.resolve('buffer'),
+        os: require.resolve('os-browserify/browser'),
+        crypto: require.resolve('crypto-browserify'),
+        stream: require.resolve('crypto-browserify'),
+        string_decoder: require.resolve('crypto-browserify'),
+        http: require.resolve('stream-http'),
+        https: require.resolve('https-browserify'),
+      }
     }
   }
 

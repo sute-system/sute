@@ -7,9 +7,6 @@ import { resolveApp } from "../utils/file"
 
 import type { IWebpackConfig, IserviceConfig, } from "../types/webpack"
 
-interface configType {
-  [key: string]: any
-}
 
 class Config extends Print {
   private mustParams: string[] = []
@@ -24,13 +21,13 @@ class Config extends Print {
     "htmlWebpackPlugin",
     "copyWebpackPlugin",
     "definePlugin",
-    "deploy"
+    "deploy",
   ]
 
   public commonConfig: IWebpackConfig = {}// 抽离出来entry, output等webpack源配置
 
   // 开发需要依赖
-  public extraOptimizeConfig: configType = this.extOpteConfDefault
+  public extraOptimizeConfig: Record<string, any> = this.extOpteConfDefault
   public serviceConfig: IserviceConfig = this.serviceConfigDefault
   constructor() {
     super()
@@ -88,7 +85,7 @@ class Config extends Print {
     // 合并devServe
     const _serverConfig = _.cloneDeep(serverConfig)
     // ProxyConfigArrayItem devServeConfiguration["proxy"]
-    const proxy = _serverConfig.proxy as configType
+    const proxy = _serverConfig.proxy as Record<string, any>
     if (proxy) {
       delete _serverConfig.proxy;
       const serveProxy = Object.keys(proxy).map((p: string) => ({

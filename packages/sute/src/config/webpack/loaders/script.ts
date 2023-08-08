@@ -76,7 +76,6 @@ class Script extends Print {
       loader: type === "swc" ? this._swcLoader : this._esbuildLoader,
       options: options ? options : type === "swc" ? this.swcDefault : this.esbuildDefault
     }
-    console.log("buildLoader", buildLoader)
     return buildLoader;
 
   }

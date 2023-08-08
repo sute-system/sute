@@ -12,7 +12,7 @@ export function createCommands() {
     .alias("el")
     .description("eslint file")
     .action((matchPamams: string = "src/**/*", opts: eslinOptsType) => {
-      eslintAction(matchPamams,{...opts})
+      eslintAction(matchPamams, { ...opts })
     });
 
   program
@@ -28,7 +28,7 @@ export function createCommands() {
     .action(() => {
       testCommponentAction()
     })
-    
+
   program
     .command('test')
     .description("test ")

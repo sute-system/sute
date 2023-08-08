@@ -16,16 +16,22 @@ class Plugins {
       new progressBarWebpackPlugin(),
       new FriendlyErrorsWebpackPlugin(),
       new CaseSensitivePathsPlugin(),
-      this.initConfig.extraOptimizeConfig.httpCompressiton ? this.httpCompressiton : "",
+      this.httpCompressiton
     ].filter(Boolean)
   }
   get httpCompressiton() {
-    return new CompressionPlugin(
-      {
-        test: /.(css|js)$/,
-        minRatio: 0.7,
-        algorithm: "gzip"
-      })
+    const httpComOps = this.initConfig.extraOptimizeConfig.httpCompressiton;
+    if(!httpComOps) return ""
+    const options = typeof httpComOps==="boolean"? this.httpDefault:httpComOps
+    return new CompressionPlugin(options)
+
+  }
+  get httpDefault() {
+    return {
+      test: /.(css|js)$/,
+      minRatio: 0.7,
+      algorithm: "gzip"
+    }
   }
 }
 
