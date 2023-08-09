@@ -2,13 +2,6 @@
 
 ## sute: 一个基于webapck管理react应用程序的工具.
 
-想不起来其他名字，以这个命名吧~
-如何安装？
-
-```typescript
-npm install sute
-```
-
 ### 特点:
 
 - 简单,方便,快捷的配置webpack
@@ -17,24 +10,30 @@ npm install sute
   
 - 内置支持TypeScript
   
-  ### 环境要求:
-  
-- Node.js 版本Node.js 14+
+
+### 环境要求
+
+- Node.js 版本Node.js 16+
   
 
 ### 安装:
 
-```shell
-npm install sute -g
+```javascript
+npm install sute --save-dev
+# or
+yarn add sute --dev
+# or 
+pnpm add sute --save-dev
 ```
 
 ### 命令行
 
 #### sute  init
 
-> 初始化配置, 生成一个sute.configjs文件.
-
-自动生成entry,output等默认配置
+- 初始化配置, 生成一个sute.config.js文件.
+  
+- 自动生成entry,output等默认配置
+  
 
 ```javascript
 "use strict";
@@ -82,23 +81,21 @@ module.exports = ConfigFile;
 
 ##### 说明
 
-resolve. 默认配置
+resolve 默认配置
 
-> extensions:[".wasm", ".mjs", ".js", ".jsx", ".ts", ".tsx", ".vue", ".json"],
-
-> alias: 根据 src 下子目录自动生成,您无需匹配
-
-eg:
-
-```javascript
-{
+- extensions:[".wasm", ".mjs", ".js", ".jsx", ".ts", ".tsx", ".vue", ".json"]
+- alias: 根据 src 下子目录自动生成,您无需匹配
+  
+  ```javascript
+  {
    '@': resolveApp("./src"),
-  pages: resolveApp("./src/pages"),      
-  router: resolveApp("./src/router"),    
-  services: resolveApp("./src/services"),
-  ...
-}
-```
+   pages: resolveApp("./src/pages"),  
+   router: resolveApp("./src/router"),  
+   services: resolveApp("./src/services"),
+   ...
+  }
+  ```
+  
 
 #### sute dev
 
@@ -131,20 +128,21 @@ eg:
 
 #### 说明
 
-###### buildSpeendUp
+##### buildSpeendUp
 
-默认值为 false,
-buildSpeendUp:true 启动 esbuild 加速.
-buildSpeendUp 为对象时,可传type 和其对应的options
+- 默认值为 false,
+- buildSpeendUp:true 启动 esbuild 加速.
+- buildSpeendUp 为对象时,可传type 和其对应的options
 
-```typescript
+```markdown
 export type buildSpeendUpType = {
   type: "swc" | "esbuild",
   options: objType
 }
 ```
 
-> type:"esbuild" 启动esbuild-loader 替代babel. options 为对应的esbuild-loader 对应参数
+- type:"esbuild" 启动esbuild-loader 替代babel
+- options 为对应的esbuild-loader 对应参数
 
 type:esbuild 时options默认值
 
@@ -156,7 +154,8 @@ type:esbuild 时options默认值
 }
 ```
 
-> type:"swc" 启动swc-loader 替代babel. options 为对应的swc-loader 对应参数
+- type:"swc" 启动swc-loader 替代babel.
+- options 为对应的swc-loader 对应参数
 
 type:"swc" 时options默认值
 
@@ -183,9 +182,10 @@ type:"swc" 时options默认值
 }
 ```
 
-###### deploy
+##### deploy
 
-打包build时自动部署(传入单个对象或对象数组)
+- 打包build时自动部署(传入单个对象或对象数组)
+
 取参
 
 ```typescript
@@ -198,7 +198,7 @@ export type autoUploadPluginType = {
 }
 ```
 
-###### serve
+##### serve
 
 proxy 传参
 

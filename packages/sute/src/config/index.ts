@@ -140,8 +140,8 @@ export class WebpackConfig extends Print {
         buffer: require.resolve('buffer'),
         os: require.resolve('os-browserify/browser'),
         crypto: require.resolve('crypto-browserify'),
-        stream: require.resolve('crypto-browserify'),
-        string_decoder: require.resolve('crypto-browserify'),
+        stream: require.resolve('stream-browserify'),
+        string_decoder: require.resolve('string_decoder'),
         http: require.resolve('stream-http'),
         https: require.resolve('https-browserify'),
       }
