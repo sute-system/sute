@@ -1,4 +1,4 @@
-import path from "path"
+import path, { resolve } from "path"
 import fs from "fs"
 import ejs from "ejs"
 
@@ -58,7 +58,7 @@ const getFileArr = (targetPath: string) => {
 }
 
 // 获取默认文件
-const getDefaultRootFile = (rootPath: string,extensionsArr:string[]) => {
+const getDefaultRootFile = (rootPath: string, extensionsArr: string[]) => {
   let targetIndex = ""
   const fileArr = getFileArr(rootPath)
   for (let suffix of extensionsArr) {
@@ -71,11 +71,19 @@ const getDefaultRootFile = (rootPath: string,extensionsArr:string[]) => {
   return targetIndex
 }
 
+const getAbsolutePath = (name: string) => {
+  // 搜索指定模块的绝对路径并返回该路径。
+  // 这个方法的作用类似于 Node.js 的 require,但不会加载模块，只返回模块的路径。
+  const path = require.resolve(name)
+  return path
+}
+
 export {
   resolveApp,
   getAllChildDir,
   compile,
   writeToFile,
   getFileArr,
-  getDefaultRootFile
+  getDefaultRootFile,
+  getAbsolutePath
 }

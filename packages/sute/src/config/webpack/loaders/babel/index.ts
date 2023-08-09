@@ -1,4 +1,4 @@
-
+import { getAbsolutePath } from "../../../../utils/file"
 
 class BabelLoader {
 
@@ -11,27 +11,30 @@ class BabelLoader {
   get config() {
 
     return {
-      loader: "babel-loader",
+      loader: getAbsolutePath("babel-loader"),
       options: {
         presets: [
           [
-            "@babel/preset-env",
+            getAbsolutePath("@babel/preset-env"),
             {
               // targets: "last 2 version",
               useBuiltIns: "entry",
               corejs: 3,
             },
           ],
-          ["@babel/preset-react"],
-          ["@babel/preset-typescript"],
+          [getAbsolutePath("@babel/preset-react")],
+          [getAbsolutePath("@babel/preset-typescript")],
         ],
-        plugins: [
-          "@babel/plugin-transform-arrow-functions",
-          "@babel/plugin-transform-block-scoping",
-          !this.isProduction ? "react-refresh/babel" : ""
-        ].filter(Boolean)
+        plugins: this._plugins
       }
     }
+  }
+  get _plugins() {
+    return [
+      getAbsolutePath("@babel/plugin-transform-arrow-functions"),
+      getAbsolutePath("@babel/plugin-transform-block-scoping"),
+      !this.isProduction ? getAbsolutePath("react-refresh/babel") : ""
+    ].filter(Boolean)
   }
 }
 

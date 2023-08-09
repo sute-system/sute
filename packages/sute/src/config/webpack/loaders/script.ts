@@ -2,6 +2,7 @@
 import BabelLoader from "./babel/index"
 import type { configInstance } from "../../../types/webpack"
 import { isObject, isBoolean } from "../../../utils/utils"
+import { getAbsolutePath } from "../../../utils/file"
 import Print from "../../../core/stdout"
 
 class Script extends Print {
@@ -9,9 +10,9 @@ class Script extends Print {
   private isProd: boolean
   private initConfig: configInstance
   private _bableLoader: BabelLoader
-  private _esbuildLoader = "esbuild-loader"
-  private _swcLoader = "swc-loader"
-  private _threadLoader = "thread-loader"
+  private _esbuildLoader = getAbsolutePath("esbuild-loader")
+  private _swcLoader = getAbsolutePath("swc-loader")
+  private _threadLoader = getAbsolutePath("thread-loader")
   constructor(initConfig: configInstance) {
     super()
     this.isProd = process.env.NODE_ENV === "production"

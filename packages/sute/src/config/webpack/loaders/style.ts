@@ -2,6 +2,7 @@
 import { loader as MiniCssExtractPluginLoader } from 'mini-css-extract-plugin';
 
 import type { configInstance } from "../../../types/webpack"
+import { getAbsolutePath } from '../../../utils/file';
 
 class Style {
 
@@ -12,11 +13,11 @@ class Style {
     this.isProd = process.env.NODE_ENV === "production"
   }
 
-  private _styleLoader = "style-loader"
-  private _cssLoader = "css-loader"
-  private _sassLoader = "sass-loader"
-  private _lessLoader = "less-loader"
-  private _postcssLoader = "postcss-loader"
+  private _styleLoader = getAbsolutePath("style-loader")
+  private _cssLoader = getAbsolutePath("css-loader")
+  private _sassLoader = getAbsolutePath("sass-loader")
+  private _lessLoader = getAbsolutePath("less-loader")
+  private _postcssLoader = getAbsolutePath("postcss-loader")
 
   get config() {
 
