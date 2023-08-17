@@ -32,7 +32,6 @@ class SuteEslint extends Factory {
     this.init()
   }
   public getConfig(): Record<string, any> {
-    
     // 获取默认eslintrc 文件
     const eslintrcPath = this.getConfigPath("eslintrc");
     const ignoreArr = this.getIgnoreConfig(this.exePath, "eslintignore");
