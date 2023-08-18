@@ -4,6 +4,8 @@ import type { configInstance } from "../../../types/webpack"
 import { isObject, isBoolean } from "../../../utils/utils"
 import { getAbsolutePath } from "../../../utils/file"
 import Print from "../../../core/stdout"
+require("@swc/core")
+require("@swc/helpers")
 
 class Script extends Print {
 
@@ -77,6 +79,7 @@ class Script extends Print {
       loader: type === "swc" ? this._swcLoader : this._esbuildLoader,
       options: options ? options : type === "swc" ? this.swcDefault : this.esbuildDefault
     }
+    console.log("buildLoader", buildLoader);
     return buildLoader;
 
   }
@@ -102,15 +105,10 @@ class Script extends Print {
         transform: {
           legacyDecorator: true,
         },
-        externalHelpers: true, // 注意这里设置true时，需要在项目下安装@swc/helpers
+        externalHelpers: true, // 注意这里设置true时，需要在项目下安装@swc/helpers @swc/core
         target: 'es5',
       },
-      env: {
-        targets: "last 3 major versions, > 0.1%", // 根据项目设置
-        mode: "usage",
-        coreJs: "3" // 根据项目选择
-      },
-      isModule: 'unknown'
+      sync: true,
     }
   }
 }

@@ -35,7 +35,7 @@ export const devCommponentAction = async () => {
   // 测试端口号是否被占用
   await initConfig.devCheckPort(initConfig.serviceConfig.port!)
   // 开启本地服务
-  const devServer = new WebpackDevServer(initConfig.serviceConfig,compiler)
+  const devServer = new WebpackDevServer(initConfig.serviceConfig, compiler)
   await devServer.start();
 
   const exitProcess = (callback?: () => void) => () => {
