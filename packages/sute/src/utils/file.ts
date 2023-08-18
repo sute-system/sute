@@ -5,7 +5,6 @@ import ejs from "ejs"
 const appDir = process.cwd()
 const resolveApp = (dir: string) => path.resolve(appDir, dir)
 
-
 // 获取一个目录下的所有子目录
 type dirObjType = {
   [key: string]: string

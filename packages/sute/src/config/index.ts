@@ -4,6 +4,7 @@ import SpeedMeasurePlugin from "speed-measure-webpack-plugin"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import { DefinePlugin } from "webpack"
 import CopyWebpackPlugin from "copy-webpack-plugin"
+import path from "path";
 
 import Plugins from "./webpack/plugins"
 import loadersConfig from "./webpack/loaders";
@@ -119,8 +120,12 @@ export class WebpackConfig extends Print {
   }
   get resolveDefault() {
     const rootDirPath = resolveApp("src")
+    const swcHelperPath = path.resolve(__dirname, "../../node_modules/@swc/helpers")
+    const swcCorePath = path.resolve(__dirname, "../../node_modules/@swc/core")
     let _alias = {
       "@": resolveApp("./src"),
+      "@swc/helpers": swcHelperPath,
+      "@swc/core": swcCorePath
     }
     // 获取src下的所有目录~
     const srcChildDirObj = getAllChildDir(rootDirPath)
@@ -134,8 +139,8 @@ export class WebpackConfig extends Print {
       extensions: WebpackConfig.EXTENSIONS,
       alias: _alias,
       //当正常解析失败后,重定向模块请求.
-      fallback:{
-        fs:false,
+      fallback: {
+        fs: false,
         assert: require.resolve('assert'),
         buffer: require.resolve('buffer'),
         os: require.resolve('os-browserify/browser'),
