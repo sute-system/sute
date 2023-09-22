@@ -4,8 +4,8 @@ import type { configInstance } from "../../../types/webpack"
 import { isObject, isBoolean } from "../../../utils/utils"
 import { getAbsolutePath } from "../../../utils/file"
 import Print from "../../../core/stdout"
-require("@swc/core")
-require("@swc/helpers")
+// require("@swc/core")
+// require("@swc/helpers")
 
 class Script extends Print {
 
@@ -79,7 +79,6 @@ class Script extends Print {
       loader: type === "swc" ? this._swcLoader : this._esbuildLoader,
       options: options ? options : type === "swc" ? this.swcDefault : this.esbuildDefault
     }
-    console.log("buildLoader", buildLoader);
     return buildLoader;
 
   }

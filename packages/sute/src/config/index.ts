@@ -11,14 +11,27 @@ import loadersConfig from "./webpack/loaders";
 import DevWebpackConfig from "./webpack/dev"
 import ProdWebpackConfig from "./webpack/prod"
 import Print from "../core/stdout"
-import { resolveApp, getAllChildDir } from "../utils/file";
+import { resolveApp, getAllChildDir, getAbsolutePath } from "../utils/file";
 
 import type { IWebpackConfig, configInstance, DevConfigInstance, ProdConfigInstance } from "../types/webpack"
 type mergeConfigType = DevConfigInstance | ProdConfigInstance
 
 export class WebpackConfig extends Print {
 
-  static readonly EXTENSIONS = [".wasm", ".mjs", ".js", ".jsx", ".ts", ".tsx", ".vue", ".json"]
+  static readonly EXTENSIONS = [
+    ".wasm",
+    ".mjs",
+    ".js",
+    ".jsx",
+    ".ts",
+    ".tsx",
+    ".vue",
+    ".json",
+    '.scss',
+    '.sass',
+    '.less',
+    ".html"
+  ]
   private initConfig: configInstance
   private isProd: boolean
   private smp: InstanceType<typeof SpeedMeasurePlugin>
@@ -119,13 +132,15 @@ export class WebpackConfig extends Print {
     return require(packageJsonPath).version
   }
   get resolveDefault() {
+
     const rootDirPath = resolveApp("src")
-    const swcHelperPath = path.resolve(__dirname, "../../node_modules/@swc/helpers")
-    const swcCorePath = path.resolve(__dirname, "../../node_modules/@swc/core")
+    // const swcHelperPath = path.resolve(__dirname, "../../node_modules/@swc/helpers")
+    // const swcCorePath = path.resolve(__dirname, "../../node_modules/@swc/core")
+
     let _alias = {
       "@": resolveApp("./src"),
-      "@swc/helpers": swcHelperPath,
-      "@swc/core": swcCorePath
+      // "@swc/helpers": swcHelperPath,
+      // "@swc/core": swcCorePath
     }
     // 获取src下的所有目录~
     const srcChildDirObj = getAllChildDir(rootDirPath)
@@ -135,6 +150,7 @@ export class WebpackConfig extends Print {
         ...srcChildDirObj
       }
     }
+    console.log("_alias", _alias);
     return {
       extensions: WebpackConfig.EXTENSIONS,
       alias: _alias,

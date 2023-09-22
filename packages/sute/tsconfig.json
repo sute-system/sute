@@ -1,5 +1,11 @@
 {
   "display": "Node 14",
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+  ],
   "compilerOptions": {
     "lib": [
       "es2020"

@@ -74,9 +74,9 @@ class Style {
   get sassLoader() {
     return {
       loader: this._sassLoader,
-      options: {
-        sourceMap: true,
-      },
+      // options: {
+      //   sourceMap: true,
+      // },
     }
   }
   get lessLoader() {
