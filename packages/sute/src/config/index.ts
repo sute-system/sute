@@ -5,8 +5,6 @@ import HtmlWebpackPlugin from "html-webpack-plugin"
 import { DefinePlugin } from "webpack"
 import CopyWebpackPlugin from "copy-webpack-plugin"
 import path from "path";
-import "@swc/core"
-import "@swc/helpers"
 
 import Plugins from "./webpack/plugins"
 import loadersConfig from "./webpack/loaders";
@@ -140,8 +138,7 @@ export class WebpackConfig extends Print {
     // @swc/core @swc/helpers 无法找到安装的依赖路径
     // @swc/core  通过resolve.resolve 绝对路径可以解决
     // @@swc/helpers  通过直接复制库文件解决,
-    const swcHelperPath = path.resolve(__dirname, "../../../sute/other/helpers")
-
+    const swcHelperPath = path.resolve(__dirname, "../../helpers")
     let _alias = {
       "@": resolveApp("./src"),
       "@swc/core": getAbsolutePath("@swc/core"),
