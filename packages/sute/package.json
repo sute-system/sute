@@ -6,6 +6,9 @@
   "bin": {
     "sute": "./lib/index.js"
   },
+  "module": "CommonJS",
+  "esModuleInterop": true,
+  "allowSyntheticDefaultImports": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"

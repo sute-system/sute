@@ -5,6 +5,8 @@ import HtmlWebpackPlugin from "html-webpack-plugin"
 import { DefinePlugin } from "webpack"
 import CopyWebpackPlugin from "copy-webpack-plugin"
 import path from "path";
+import "@swc/core"
+import "@swc/helpers"
 
 import Plugins from "./webpack/plugins"
 import loadersConfig from "./webpack/loaders";
@@ -134,13 +136,16 @@ export class WebpackConfig extends Print {
   get resolveDefault() {
 
     const rootDirPath = resolveApp("src")
-    // const swcHelperPath = path.resolve(__dirname, "../../node_modules/@swc/helpers")
-    // const swcCorePath = path.resolve(__dirname, "../../node_modules/@swc/core")
+
+    // @swc/core @swc/helpers 无法找到安装的依赖路径
+    // @swc/core  通过resolve.resolve 绝对路径可以解决
+    // @@swc/helpers  通过直接复制库文件解决,
+    const swcHelperPath = path.resolve(__dirname, "../../../sute/other/helpers")
 
     let _alias = {
       "@": resolveApp("./src"),
-      // "@swc/helpers": swcHelperPath,
-      // "@swc/core": swcCorePath
+      "@swc/core": getAbsolutePath("@swc/core"),
+      "@swc/helpers": swcHelperPath
     }
     // 获取src下的所有目录~
     const srcChildDirObj = getAllChildDir(rootDirPath)
@@ -150,7 +155,6 @@ export class WebpackConfig extends Print {
         ...srcChildDirObj
       }
     }
-    console.log("_alias", _alias);
     return {
       extensions: WebpackConfig.EXTENSIONS,
       alias: _alias,
