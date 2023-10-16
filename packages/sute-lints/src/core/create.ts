@@ -7,27 +7,20 @@ import type { eslinOptsType } from "../types/lints"
 export function createCommands() {
 
   program
-    .option('-f --fix')
     .command("eslint [matchPamams]")
     .alias("el")
+    .option('-f --fix')
     .description("eslint file")
     .action((matchPamams: string = "src/**/*", opts: eslinOptsType) => {
       eslintAction(matchPamams, { ...opts })
     });
 
   program
-    .command('dev')
+    .command('pretter')
     .description(" will be executed development command ")
     .action(() => {
       testCommponentAction()
     });
-
-  program
-    .command('build')
-    .description(" will be executed build command ")
-    .action(() => {
-      testCommponentAction()
-    })
 
   program
     .command('test')

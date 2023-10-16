@@ -38,9 +38,12 @@ class SuteEslint extends Factory {
     this.patternPathArr = ignoreArr
     return eslintrcPath
   }
+
   private createEslint(opts: eslinOptsType) {
+    console.log("opts", opts);
+    const { fix = false } = opts || {}
     const eslint = new ESLint({
-      fix: false,
+      fix: fix,
       overrideConfig: this.eslintConfig,
       extensions: SuteEslint.EXTENSIONS,
       useEslintrc: false// 是否使用项目根目录下的.eslintrc文件或者package.json中的ESlint,默认情况下会向上查找~
