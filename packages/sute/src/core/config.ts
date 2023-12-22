@@ -5,8 +5,7 @@ import inquirer from "inquirer"
 import _ from "lodash"
 import { resolveApp } from "../utils/file"
 
-import type { IWebpackConfig, IserviceConfig, } from "../types/webpack"
-
+import type { IWebpackConfig, IserviceConfig } from "../types/webpack"
 
 class Config extends Print {
   private mustParams: string[] = []
@@ -22,10 +21,10 @@ class Config extends Print {
     "copyWebpackPlugin",
     "definePlugin",
     "deploy",
+    "prodConfig"
   ]
-
+  // private prodConfig: Configuration = {}
   public commonConfig: IWebpackConfig = {}// 抽离出来entry, output等webpack源配置
-
   // 开发需要依赖
   public extraOptimizeConfig: Record<string, any> = this.extOpteConfDefault
   public serviceConfig: IserviceConfig = this.serviceConfigDefault
@@ -65,7 +64,6 @@ class Config extends Print {
       }
     })
   }
-
   // commonConfig
   private async setCommonConfigFn(commonConfig: IWebpackConfig) {
     const _newOriginConfig = _.cloneDeep(commonConfig)
@@ -96,7 +94,10 @@ class Config extends Print {
     }
     this.serviceConfig = _serverConfig
   }
-
+  // 保存生产环境下的配置-- 直接从extraOptimizeConfig 获取就行了，不用单独抽离出去
+  // private async setProdConfig(prodConfig: Configuration) {
+  //   this.prodConfig = prodConfig
+  // }
   // 保存额外的性能优化相关配置
   private async setAdditionalOptimize(config: IWebpackConfig) {
     const _config = _.cloneDeep(config);
@@ -137,12 +138,10 @@ class Config extends Print {
     this.failStdout(`so sorry, ${port} already in use！！`);
     process.exit(0);
   }
-
   // 对象类型检测
   protected isValidKey(K: string | number | symbol, O: Object): K is keyof Object {
     return K in O
   }
-
   get extOpteConfDefault() {
     return {
       miniCssExtractPlugin: false, // 是否将css提取到一个独立的css文件中.
@@ -153,6 +152,7 @@ class Config extends Print {
       buildSpeendUp: false, // 开发esbuild/swc加速~
       esbuildMinimizer: false,// 是否开启esbuild 压缩.
       deploy: false,// 部署
+      prodConfig: false,// 生产环境下的配置
       htmlWebpackPlugin: {
         title: "sute_cli",
         template: resolveApp("./public/index.html")

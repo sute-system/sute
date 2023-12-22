@@ -32,6 +32,7 @@ export class WebpackConfig extends Print {
     '.less',
     ".html"
   ]
+  private customLoaderPath = path.resolve(__dirname, "./webpack/customLoaders")
   private initConfig: configInstance
   private isProd: boolean
   private smp: InstanceType<typeof SpeedMeasurePlugin>
@@ -44,25 +45,26 @@ export class WebpackConfig extends Print {
     this.smp = new SpeedMeasurePlugin()
     this.commoConfig = this._commonConifg(config)
   }
-
   private _commonConifg(config: configInstance) {
-
     return {
       ...config.commonConfig,
+      resolveLoader: {
+        modules: ["node_modules", this.customLoaderPath].filter(Boolean)
+      },
       output: this.output,
       resolve: this.resolve,
       cache: this.cache,
       module: {
         rules: loadersConfig(config),
       },
-      plugins: this._plugins
+      plugins: this._plugins,
     }
   }
 
   get output() {
     const output = this.initConfig.commonConfig.output
     let outPutDefault: IWebpackConfig["output"] = {
-      filename: "static/js/[name]_[[hash:8].js",
+      filename: "static/js/[name]_[[hash:16].js",
       path: resolveApp("./build"),
       clean: true,
     }
@@ -75,7 +77,6 @@ export class WebpackConfig extends Print {
     }
   }
   get cache() {
-
     const buildSpeendUp = this.initConfig.extraOptimizeConfig.buildSpeendUp
     // 可能为 boolean | 对象 | undefined
     type cacheType = NonNullable<IWebpackConfig['cache']>
@@ -181,10 +182,8 @@ export class WebpackConfig extends Print {
 
 type envType = "development" | "production"
 const exeConfig = (env: envType, initConfig: configInstance): IWebpackConfig => {
-
   process.env.NODE_ENV = env;
   const isProduction = env === "production";
-
   const webpackConfig = new WebpackConfig(initConfig, isProduction)
 
   // 获取生产环境和开发环境的配置

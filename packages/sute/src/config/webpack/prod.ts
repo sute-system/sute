@@ -6,8 +6,11 @@ import webpack from "webpack"
 import { EsbuildPlugin } from "esbuild-loader"
 import AutoUploadPlugin from "./customPlugins/autoUploadPlugins"
 import Print from "../../core/stdout"
+import glob from "glob"
+import PurgeCSSPlugin from "purgecss-webpack-plugin";
 
 import type { configInstance, autoUploadPluginType } from "../../types/webpack"
+import { resolveApp } from "../../utils/file";
 
 class ProdWebpackConfig extends Print {
   private initConfig: configInstance
@@ -16,13 +19,18 @@ class ProdWebpackConfig extends Print {
     this.initConfig = options
   }
   get prodConfig() {
-    return {
+    const prodConfig = this.initConfig.extraOptimizeConfig?.prodConfig
+    const baseConfig = {
       mode: "production",
       devtool: "source-map",
       optimization: this.optimization,
       performance: this.performance,
-      plugins: this.plugins
+      plugins: this.plugins,
     }
+    if (prodConfig && (JSON.stringify(prodConfig) != "{}")) {
+      return Object.assign(baseConfig, prodConfig)
+    }
+    return baseConfig
   }
   get plugins() {
     return [
@@ -32,6 +40,14 @@ class ProdWebpackConfig extends Print {
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash].css',
         chunkFilename: 'css/[id].[contenthash].css',
+      }),
+      new PurgeCSSPlugin({
+        paths: glob.sync(`${resolveApp("./src")}/**/*`, { nodir: true }),
+        safelist: function () {
+          return {
+            standard: ["body", "html"]
+          }
+        }
       }),
       ...this.deploy
     ].filter(Boolean)
@@ -63,6 +79,26 @@ class ProdWebpackConfig extends Print {
   }
   get optimization() {
     return {
+      usedExports: true,// tree shaking 标注哪些函数式没有被使用。
+      minimize: true,
+      minimizer: [
+        this.initConfig.extraOptimizeConfig?.esbuildMinimizer
+          ? new EsbuildPlugin()
+          : new TerserPlugin({
+            parallel: true,//使用多进程并发以提高构建速度.
+            extractComments: false,// 是否将注释剥离到单独的文件当中.
+            terserOptions: {
+              compress: {
+                arguments: false,
+                dead_code: true
+              },
+              mangle: true,
+              toplevel: true,
+              keep_classnames: true,
+              keep_fnames: true
+            }
+          })
+      ],
       splitChunks: {
         chunks: "all",
         minSize: 20000,
@@ -70,26 +106,26 @@ class ProdWebpackConfig extends Print {
         maxInitialRequests: 9,
         automaticNameDelimiter: '~',
         cacheGroups: {
-          uisother: {
-            test: /([\\/]node_modules[\\/](moment|zrender)[\\/]|[\\/]src[\\/]assets[\\/]fonts[\\/]iconfont.js)/,
-            name: 'uisother',
-            priority: -1
-          },
-          uisantd: {
-            test: /[\\/]node_modules[\\/](antd)[\\/]/,
-            name: 'uisantd',
-            priority: -3
-          },
-          locallibs: {
-            test: /[\\/]node_modules[\\/](react|react-dom|redux|react-redux|react-router|react-router-dom)[\\/]/,
-            name: 'locallibs',
-            priority: -7
-          },
-          localcharts: {
-            test: /[\\/]node_modules[\\/](echarts|echarts-for-react)[\\/]/,
-            name: 'localcharts',
-            priority: -8
-          },
+          // uisother: {
+          //   test: /([\\/]node_modules[\\/](moment|zrender)[\\/]|[\\/]src[\\/]assets[\\/]fonts[\\/]iconfont.js)/,
+          //   name: 'uisother',
+          //   priority: -1
+          // },
+          // uisantd: {
+          //   test: /[\\/]node_modules[\\/](antd)[\\/]/,
+          //   name: 'uisantd',
+          //   priority: -3
+          // },
+          // locallibs: {
+          //   test: /[\\/]node_modules[\\/](react|react-dom|redux|react-redux|react-router|react-router-dom)[\\/]/,
+          //   name: 'locallibs',
+          //   priority: -7
+          // },
+          // localcharts: {
+          //   test: /[\\/]node_modules[\\/](echarts|echarts-for-react)[\\/]/,
+          //   name: 'localcharts',
+          //   priority: -8
+          // },
           vendors: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors',
@@ -102,16 +138,13 @@ class ProdWebpackConfig extends Print {
             filename: "common_[name]_[hash:16].js",
             reuseExistingChunk: true
           }
+        },
+      },
+      runtimeChunk: {
+        name: function (entrypoint: any) {
+          return `runtime-${entrypoint.name}`
         }
       },
-      minimizer: [
-        this.initConfig.extraOptimizeConfig?.esbuildMinimizer
-          ? new EsbuildPlugin()
-          : new TerserPlugin({
-            parallel: true,//使用多进程并发以提高构建速度.
-            extractComments: false// 是否将注释剥离到单独的文件当中.
-          })
-      ],
     }
   }
   get performance() {

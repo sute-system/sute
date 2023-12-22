@@ -5,6 +5,7 @@
   ],
   "exclude": [
     "src/**/*.test.ts",
+    "helpers/**/*"
   ],
   "compilerOptions": {
     "lib": [

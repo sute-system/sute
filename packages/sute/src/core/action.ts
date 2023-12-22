@@ -58,7 +58,7 @@ export const prodCommponentAction = async () => {
   const initConfig = new Config();
   await initConfig.run()
   const webpackConfig = exeConfig("production", initConfig);
-  webpack(webpackConfig, (error, stats: any) => {
+  webpack(webpackConfig, (error: any, stats: any) => {
     if (stats && stats.hasErrors()) {
       throw stats.toString({
         logging: 'error',

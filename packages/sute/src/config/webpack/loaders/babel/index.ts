@@ -7,9 +7,7 @@ class BabelLoader {
   constructor() {
     this.isProduction = process.env.NODE_ENV === "production"
   }
-
   get config() {
-
     return {
       loader: getAbsolutePath("babel-loader"),
       options: {

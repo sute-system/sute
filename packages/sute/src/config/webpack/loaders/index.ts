@@ -9,9 +9,7 @@ function loadersConfig(initConfig: configInstance) {
   const assetModules = assetModulesFn()
   const style = new Style(initConfig).config
   const script = new Script(initConfig).config
-
   const result = [...style, ...script, ...assetModules]
-
   return result;
 }
 

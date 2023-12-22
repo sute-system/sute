@@ -41,6 +41,7 @@ export interface IExtraOptimConfig {
   buildSpeendUp?: boolean | buildSpeendUpType, // 开启esbuild 和swc 加速
   esbuildMinimizer?: boolean // 启用esbuild 压缩处理器,
   deploy?: autoUploadPluginType | autoUploadPluginType[], // 打包后自动部署~
+  prodConfig?:boolean |Object
 }
 
 export interface IWebpackConfig extends Configuration, IExtraOptimConfig {

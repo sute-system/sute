@@ -33,6 +33,12 @@ class Script extends Print {
           this.threadLoader(this.initConfig),// 是否开启多线程打包
         ].filter(Boolean)
       },
+      {
+        test: /\.md$/i,
+        use: [
+          "transform-md"
+        ]
+      },
     ]
   }
   private threadLoader(initConfig: configInstance) {

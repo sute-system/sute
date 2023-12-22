@@ -5,7 +5,6 @@ import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';// æ£
 import type { configInstance } from "../../types/webpack"
 
 class Plugins {
-
   private initConfig: configInstance
   constructor(options: configInstance) {
     this.initConfig = options
