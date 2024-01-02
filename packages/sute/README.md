@@ -5,16 +5,14 @@
 ### 特点:
 
 - 简单,方便,快捷的配置webpack
-  
+
 - 支持通过swc和esbuild 加速打包.
-  
+
 - 内置支持TypeScript
-  
 
 ### 环境要求
 
 - Node.js 版本Node.js 16+
-  
 
 ### 安装:
 
@@ -31,9 +29,8 @@ pnpm add sute --save-dev
 #### sute  init
 
 - 初始化配置, 生成一个sute.config.js文件.
-  
+
 - 自动生成entry,output等默认配置
-  
 
 ```javascript
 "use strict";
@@ -84,6 +81,7 @@ module.exports = ConfigFile;
 resolve 默认配置
 
 - extensions:[".wasm", ".mjs", ".js", ".jsx", ".ts", ".tsx", ".vue", ".json"]
+
 - alias: 根据 src 下子目录自动生成,您无需匹配
   
   ```javascript
@@ -95,7 +93,6 @@ resolve 默认配置
    ...
   }
   ```
-  
 
 #### sute dev
 
@@ -217,4 +214,4 @@ proxy 传参
 
 其余 port host hot 等传参和webpack-dev-serve 传参一致.
 
-####
+#### 
